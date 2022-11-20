@@ -1,7 +1,7 @@
 /*
  * @Author: Yanc
  * @Date: 2022-10-30 15:06:53
- * @LastEditTime: 2022-11-03 00:32:25
+ * @LastEditTime: 2022-11-19 20:47:11
  */
 
 import { extend } from "../shared";
@@ -9,7 +9,7 @@ import { extend } from "../shared";
 let activeEffect;
 let shouldTrack;
 
-class ReactiveEffect {
+export class ReactiveEffect {
   private _fn;
 
   deps = [];
