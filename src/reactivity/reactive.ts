@@ -1,7 +1,7 @@
 /*
  * @Author: Yanc
  * @Date: 2022-10-30 14:53:56
- * @LastEditTime: 2022-11-03 00:08:35
+ * @LastEditTime: 2022-12-07 00:40:31
  */
 
 import {
@@ -9,6 +9,7 @@ import {
   readonlyHanders,
   shallowReadonlyHanders,
 } from "./baseHanders";
+import { isObject } from "./../shared";
 
 export const enum ReactiveFlags {
   IS_REACTIVE = "__v_isReactive",
@@ -39,6 +40,9 @@ export function isProxy(value) {
   return isReactive(value) || isReadonly(value);
 }
 
-function createActiveObject(raw: any, baseHanders) {
-  return new Proxy(raw, baseHanders);
+function createActiveObject(target, baseHanders) {
+  if (!isObject(target)) {
+    console.warn(`target ${target} 必须是一个对象`);
+  }
+  return new Proxy(target, baseHanders);
 }

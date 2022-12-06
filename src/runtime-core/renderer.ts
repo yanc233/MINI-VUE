@@ -1,11 +1,11 @@
 import { ShapeFlags } from "../shared/ShapFlages";
-import { isObject } from "./../shared/index";
+import { isObject } from "./../shared";
 import { createComponentInstance, setupComponent } from "./component";
 
 /*
  * @Author: Yanc
  * @Date: 2022-11-27 15:39:24
- * @LastEditTime: 2022-12-06 23:22:27
+ * @LastEditTime: 2022-12-06 23:59:35
  */
 export function render(vnode, container) {
   // patch
