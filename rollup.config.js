@@ -1,7 +1,7 @@
 /*
  * @Author: Yanc
  * @Date: 2022-11-27 16:27:25
- * @LastEditTime: 2022-11-27 17:13:27
+ * @LastEditTime: 2022-12-07 00:55:25
  */
 
 import typescript from "@rollup/plugin-typescript";
@@ -21,4 +21,10 @@ export default {
     },
   ],
   plugins: [typescript()],
+  onwarn: (msg, warn) => {
+    // 忽略 Circular 的错误
+    if (!/Circular/.test(msg)) {
+      warn(msg);
+    }
+  },
 };
