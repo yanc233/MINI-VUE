@@ -5,7 +5,7 @@ import { createComponentInstance, setupComponent } from "./component";
 /*
  * @Author: Yanc
  * @Date: 2022-11-27 15:39:24
- * @LastEditTime: 2022-12-06 22:54:18
+ * @LastEditTime: 2022-12-06 23:22:27
  */
 export function render(vnode, container) {
   // patch
@@ -39,7 +39,15 @@ function mountElement(vnode, container) {
 
   for (const key in props) {
     const val = props[key];
-    el.setAttribute(key, val);
+    // on + Event name 事件的命名规范
+    const isOn = (key: string) => /^on[A-Z]/.test(key);
+
+    if (isOn(key)) {
+      const event = key.slice(2).toLowerCase();
+      el.addEventListener(event, val);
+    } else {
+      el.setAttribute(key, val);
+    }
   }
 
   el.setAttribute("id", "root");
