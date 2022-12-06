@@ -1,10 +1,11 @@
+import { ShapeFlags } from "../shared/ShapFlages";
 import { isObject } from "./../shared/index";
 import { createComponentInstance, setupComponent } from "./component";
 
 /*
  * @Author: Yanc
  * @Date: 2022-11-27 15:39:24
- * @LastEditTime: 2022-11-27 18:46:05
+ * @LastEditTime: 2022-12-06 22:54:18
  */
 export function render(vnode, container) {
   // patch
@@ -14,9 +15,11 @@ export function render(vnode, container) {
 
 function patch(vnode, container) {
   // 判断vnode 是不是 element
-  if (typeof vnode.type === "string") {
+  const { shapeFlage } = vnode;
+
+  if (shapeFlage & ShapeFlags.ELEMENT) {
     processElement(vnode, container);
-  } else if (isObject(vnode.type)) {
+  } else if (shapeFlage & ShapeFlags.STATEFUL_COMPONENT) {
     processComponent(vnode, container);
   }
 }
@@ -25,12 +28,12 @@ function processElement(vnode: any, container: any) {
   mountElement(vnode, container);
 }
 function mountElement(vnode, container) {
-  const { type, children, props } = vnode;
+  const { type, children, props, shapeFlage } = vnode;
   const el = (vnode.el = document.createElement(type));
 
-  if (typeof children === "string") {
+  if (shapeFlage & ShapeFlags.TEXT_CHILDREN) {
     el.textContent = children;
-  } else if (Array.isArray(children)) {
+  } else if (shapeFlage & ShapeFlags.ARRAY_CHILDREN) {
     mountChildren(vnode, el);
   }
 
